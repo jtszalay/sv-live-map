@@ -172,7 +172,7 @@ class RaidReader(NXReader):
         read_key = self.read_pointer_int(f"{self.SAVE_BLOCK_PTR}+{base_offset:X}", 4)
         if read_key != key:
             print(f"WARNING: {base_offset=:X} contains the key {read_key=:X} and not {key=:X}")
-            print("Searching for correct block")
+            ("Searching for correct block")
             direction = 1 if key > read_key else -1
             for offset in range(base_offset, base_offset + direction * 0x1000, direction * 0x20):
                 read_key = self.read_pointer_int(f"{self.SAVE_BLOCK_PTR}+{offset:X}", 4)

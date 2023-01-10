@@ -30,6 +30,7 @@ from ..widget.corrected_marker import CorrectedMarker
 from ..util.personal_data_handler import PersonalDataHandler
 from .automation_window import AutomationWindow
 from .fast_code_window import FastCodeWindow
+from .auto_host_window import AutoHostWindow
 from ..util.path_handler import get_path
 
 customtkinter.set_default_color_theme("blue")
@@ -53,6 +54,7 @@ class Application(customtkinter.CTk):
         self.reader: RaidReader = None
         self.automation_window: AutomationWindow = None
         self.fast_code_window: FastCodeWindow = None
+        self.auto_host_window: AutoHostWindow = None
         self.render_thread: threading.Thread = None
         self.sprite_handler: PokeSpriteHandler = PokeSpriteHandler(tk_image = True)
         self.settings: dict[str, Any] = {}
@@ -277,7 +279,15 @@ class Application(customtkinter.CTk):
             width = 300,
             command = self.open_fast_code_window
         )
-        self.fast_code_button.grid(row = 14, column = 0, columnspan = 2, padx = 10, pady = 5)
+        self.fast_code_button.grid(row = 13, column = 0, columnspan = 2, padx = 10, pady = 5)
+
+        self.auto_host_button = customtkinter.CTkButton(
+            master = self.settings_frame,
+            text = "Auto Host",
+            width = 300,
+            command = self.open_auto_host_window
+        )
+        self.auto_host_button.grid(row = 14, column = 0, columnspan = 2, padx = 10, pady = 5)
 
     def load_from_save(self):
         """Load and display info from save"""
@@ -384,6 +394,12 @@ class Application(customtkinter.CTk):
         if self.fast_code_window is None:
             self.fast_code_window = FastCodeWindow(settings = self.settings)
         self.fast_code_window.focus_force()
+
+    def open_auto_host_window(self):
+        """Open Auto Host Window"""
+        if self.auto_host_window is None:
+            self.auto_host_window = AutoHostWindow(settings = self.settings)
+        self.auto_host_window.focus_force()
 
     def handle_close_events(self):
         """Handle close events"""

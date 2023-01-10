@@ -143,6 +143,12 @@ class NXReader:
     def key(self, key: int) -> None:
         self._send_command(f'key {key}')
 
+    def pixel_peek(self) -> bytearray:
+        self._send_command(f'pixelPeek')
+        size_of_image = int.from_bytes(self._recv(5000))
+        screen = self._recv(size_of_image)    
+        return screen
+
     def press(self, button: str) -> None:
         """Press and hold button"""
         self._send_command(f'press {button}')
